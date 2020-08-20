@@ -44,5 +44,15 @@ public class Loader
         }
         System.out.println("Kenny is "+ kenny.getStatus() + " :(");
 
+        System.out.println();
+        System.out.println("Chubays weight is " + chubays.getWeight());
+        chubays.feed(150.00);
+        System.out.println("Chubays weight is " + chubays.getWeight());
+        chubays.pee();
+        chubays.pee();
+        chubays.pee();
+        System.out.println("Chubays weight is " + chubays.getWeight());
+        System.out.println("Chubays ate " + chubays.getFoodWeight());
+
     }
 }

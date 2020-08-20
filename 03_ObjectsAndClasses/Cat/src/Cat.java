@@ -3,7 +3,7 @@ public class Cat
 {
     private double originWeight;
     private double weight;
-
+    private double foodWeight;
     private double minWeight;
     private double maxWeight;
 
@@ -25,6 +25,11 @@ public class Cat
     public void feed(Double amount)
     {
         weight = weight + amount;
+        foodWeight = foodWeight + amount;
+    }
+
+    public double getFoodWeight() {
+        return foodWeight;
     }
 
     public void drink(Double amount)
@@ -51,5 +56,9 @@ public class Cat
         else {
             return "Playing";
         }
+    }
+    public void pee(){
+        weight = weight - (weight / 50);
+        System.out.println("pi-pi");
     }
 }
