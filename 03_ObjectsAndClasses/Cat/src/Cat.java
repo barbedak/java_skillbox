@@ -6,6 +6,8 @@ public class Cat
     private double foodWeight;
     private double minWeight;
     private double maxWeight;
+    private boolean isAlive;
+    private static int countCats = 0;
 
     public Cat()
     {
@@ -13,52 +15,76 @@ public class Cat
         originWeight = weight;
         minWeight = 1000.0;
         maxWeight = 9000.0;
+        countCats += 1;
+        isAlive = true;
+    }
 
+    public static int getCount()
+    {
+        return countCats;
     }
 
     public void meow()
     {
-        weight = weight - 1;
-        System.out.println("Meow");
+        if (isAlive)
+        {
+            weight = weight - 1;
+            System.out.println("Meow");
+        }
     }
 
     public void feed(Double amount)
     {
-        weight = weight + amount;
-        foodWeight = foodWeight + amount;
+        if (isAlive)
+        {
+            weight = weight + amount;
+            foodWeight = foodWeight + amount;
+        }
     }
 
-    public double getFoodWeight() {
-        return foodWeight;
-    }
+    public double getFoodWeight() { return foodWeight; }
 
     public void drink(Double amount)
     {
-        weight = weight + amount;
+        if (isAlive) { weight = weight + amount; }
     }
 
-    public Double getWeight()
+    public Double getWeight() { return weight; }
+
+    public void getLiveStatus()
     {
-        return weight;
+        if ((weight < minWeight) || (weight > maxWeight))
+        {
+            isAlive = false;
+            countCats -= 1;
+        }
     }
 
     public String getStatus()
     {
-        if(weight < minWeight) {
+        if(weight < minWeight)
+        {
+            if (isAlive) { getLiveStatus(); } //для корректного подсчета живых котов
             return "Dead";
         }
-        else if(weight > maxWeight) {
+        else if(weight > maxWeight)
+        {
+            if (isAlive) { getLiveStatus(); } //для корректного подсчета живых котов
             return "Exploded";
         }
-        else if(weight > originWeight) {
+        else if(weight > originWeight)
+        {
             return "Sleeping";
         }
-        else {
+        else
+            {
             return "Playing";
-        }
+            }
     }
     public void pee(){
-        weight = weight - (weight / 50);
-        System.out.println("pi-pi");
+        if (isAlive) {
+            weight = weight - (weight / 50);
+            System.out.println("pi-pi");
+        }
     }
 }
