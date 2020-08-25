@@ -12,6 +12,7 @@ public class Cat
     private double maxWeight;
     private boolean isAlive;
     private static int countCats = 0;
+    private Color color;
 
     public Cat()
     {
@@ -21,6 +22,16 @@ public class Cat
         maxWeight = 9000.0;
         countCats += 1;
         isAlive = true;
+    }
+
+    public void setColor(Color color)
+    {
+        this.color = color;
+    }
+
+    public Color getColor()
+    {
+        return color;
     }
 
     public Cat(double weight)

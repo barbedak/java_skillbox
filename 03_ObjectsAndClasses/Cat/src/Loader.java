@@ -83,6 +83,5 @@ public class Loader
         Cat kitten = getKitten();
         Cat kitten1 = getKitten();
         Cat kitten2 = getKitten();
-
     }
 }
