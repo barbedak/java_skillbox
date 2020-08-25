@@ -1,8 +1,13 @@
 
 public class Loader
 {
+    private static Cat getKitten() {
+       return new Cat(1100.0);
+    }
+
     public static void main(String[] args)
     {
+        /*
         System.out.println("Total alive cats : " + Cat.getCount());
         System.out.println("Add cats ...");
         Cat barsik = new Cat();
@@ -32,6 +37,7 @@ public class Loader
          */
 
 
+        /*
         //feeding Murka
         System.out.println();
         System.out.println("Murka status: " + murka.getStatus());
@@ -73,5 +79,10 @@ public class Loader
         System.out.println("Chubays weight is " + chubays.getWeight());
         System.out.println("Chubays ate " + chubays.getFoodWeight());
         */
+
+        Cat kitten = getKitten();
+        Cat kitten1 = getKitten();
+        Cat kitten2 = getKitten();
+
     }
 }

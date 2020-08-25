@@ -23,6 +23,13 @@ public class Cat
         isAlive = true;
     }
 
+    public Cat(double weight)
+    {
+        this();
+        this.weight = weight;
+        this.originWeight = this.weight;
+    }
+
     public static int getCount()
     {
         return countCats;
