@@ -89,7 +89,7 @@ public class Cat
             return "Playing";
             }
     }
-    
+
     public void pee(){
         if (isAlive) {
             weight = weight - (weight / 50);

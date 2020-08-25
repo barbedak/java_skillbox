@@ -2,5 +2,6 @@ public enum Color {
     BLACK,
     WHITE,
     GREY,
-    BLACK_AND_WHITE
+    BLACK_AND_WHITE,
+    REDHEAD
 }
