@@ -1,6 +1,10 @@
 
 public class Cat
 {
+    public static final double MIN_WEIGHT = 1000.0;
+    public static final double MAX_WEIGHT = 9000.0;
+    public static final int NUMBER_OF_EYES = 2;
+
     private double originWeight;
     private double weight;
     private double foodWeight;
@@ -30,6 +34,7 @@ public class Cat
         {
             weight = weight - 1;
             System.out.println("Meow");
+            setLiveStatus();
         }
     }
 
@@ -39,6 +44,7 @@ public class Cat
         {
             weight = weight + amount;
             foodWeight = foodWeight + amount;
+            setLiveStatus();
         }
     }
 
@@ -46,12 +52,16 @@ public class Cat
 
     public void drink(Double amount)
     {
-        if (isAlive) { weight = weight + amount; }
+        if (isAlive)
+        {
+            weight = weight + amount;
+            setLiveStatus();
+        }
     }
 
     public Double getWeight() { return weight; }
 
-    public void getLiveStatus()
+    public void setLiveStatus()
     {
         if ((weight < minWeight) || (weight > maxWeight))
         {
@@ -64,12 +74,10 @@ public class Cat
     {
         if(weight < minWeight)
         {
-            if (isAlive) { getLiveStatus(); } //для корректного подсчета живых котов
             return "Dead";
         }
         else if(weight > maxWeight)
         {
-            if (isAlive) { getLiveStatus(); } //для корректного подсчета живых котов
             return "Exploded";
         }
         else if(weight > originWeight)
@@ -81,10 +89,12 @@ public class Cat
             return "Playing";
             }
     }
+    
     public void pee(){
         if (isAlive) {
             weight = weight - (weight / 50);
             System.out.println("pi-pi");
+            setLiveStatus();
         }
     }
 }
