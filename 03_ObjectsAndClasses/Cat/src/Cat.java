@@ -8,18 +8,14 @@ public class Cat
     private double originWeight;
     private double weight;
     private double foodWeight;
-    private double minWeight;
-    private double maxWeight;
     private boolean isAlive;
-    private static int countCats = 0;
+    private static int countCats;
     private Color color;
 
     public Cat()
     {
         weight = 1500.0 + 3000.0 * Math.random();
         originWeight = weight;
-        minWeight = 1000.0;
-        maxWeight = 9000.0;
         countCats += 1;
         isAlive = true;
     }
@@ -81,7 +77,7 @@ public class Cat
 
     public void setLiveStatus()
     {
-        if ((weight < minWeight) || (weight > maxWeight))
+        if ((weight < MIN_WEIGHT) || (weight > MAX_WEIGHT))
         {
             isAlive = false;
             countCats -= 1;
@@ -90,11 +86,11 @@ public class Cat
 
     public String getStatus()
     {
-        if(weight < minWeight)
+        if(weight < MIN_WEIGHT)
         {
             return "Dead";
         }
-        else if(weight > maxWeight)
+        else if(weight > MAX_WEIGHT)
         {
             return "Exploded";
         }
