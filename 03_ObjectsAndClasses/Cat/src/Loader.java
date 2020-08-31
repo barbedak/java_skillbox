@@ -83,5 +83,22 @@ public class Loader
         Cat kitten = getKitten();
         Cat kitten1 = getKitten();
         Cat kitten2 = getKitten();
+
+        Cat tester = new Cat();
+        tester.setName("Tester");
+        System.out.println("Tester name - " + tester.getName());
+        System.out.println("Tester weight - " + tester.getWeight());
+
+        Cat vasyan = new Cat();
+        vasyan.setName("Vasyan");
+        System.out.println("Vasyan name - " + vasyan.getName());
+        System.out.println("Vasyan weight - " + vasyan.getWeight());
+
+        System.out.println();
+        System.out.println("Copying cat...");
+        tester.copyCat(vasyan);
+        System.out.println("Tester name - " + tester.getName());
+        System.out.println("Tester weight - " + tester.getWeight());
+
     }
 }

@@ -8,16 +8,83 @@ public class Cat
     private double originWeight;
     private double weight;
     private double foodWeight;
-    private boolean isAlive;
+    private boolean Alive;
     private static int countCats;
     private Color color;
+    private String name;
 
     public Cat()
     {
-        weight = 1500.0 + 3000.0 * Math.random();
-        originWeight = weight;
-        countCats += 1;
-        isAlive = true;
+        setWeight(1500.0 + 3000.0 * Math.random());
+        setOriginWeight(getWeight());
+        setCountCats(getCountCats() + 1);
+        setAlive(true);
+    }
+
+    public Cat(double weight)
+    {
+        this();
+        setWeight(weight);
+        setOriginWeight(getWeight());
+    }
+
+
+    public void copyCat (Cat cat)
+    {
+        setName(cat.getName());
+        setColor(cat.getColor());
+        setWeight(cat.getWeight());
+        setOriginWeight(cat.getOriginWeight());
+        setFoodWeight(cat.getFoodWeight());
+        setAlive(cat.isAlive());
+    }
+
+    public double getOriginWeight() {
+        return originWeight;
+    }
+
+    public void setOriginWeight(double originWeight) {
+        this.originWeight = originWeight;
+    }
+
+    public double getFoodWeight() {
+        return foodWeight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setFoodWeight(double foodWeight) {
+        this.foodWeight = foodWeight;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isAlive() {
+        return Alive;
+    }
+
+    public void setAlive(boolean alive) {
+        Alive = alive;
+    }
+
+    public static double getMinWeight() {
+        return MIN_WEIGHT;
+    }
+
+    public static double getMaxWeight() {
+        return MAX_WEIGHT;
+    }
+
+    public static int getNumberOfEyes() {
+        return NUMBER_OF_EYES;
     }
 
     public void setColor(Color color)
@@ -30,11 +97,12 @@ public class Cat
         return color;
     }
 
-    public Cat(double weight)
-    {
-        this();
-        this.weight = weight;
-        this.originWeight = this.weight;
+    public static void setCountCats(int countCats) {
+        Cat.countCats = countCats;
+    }
+
+    public static int getCountCats() {
+        return countCats;
     }
 
     public static int getCount()
@@ -44,57 +112,55 @@ public class Cat
 
     public void meow()
     {
-        if (isAlive)
+        if (isAlive())
         {
-            weight = weight - 1;
+            setWeight(getWeight() - 1);
             System.out.println("Meow");
-            setLiveStatus();
+            checkLiveStatus();
         }
     }
 
     public void feed(Double amount)
     {
-        if (isAlive)
+        if (isAlive())
         {
-            weight = weight + amount;
-            foodWeight = foodWeight + amount;
-            setLiveStatus();
+            setWeight(getWeight() + amount);
+            setFoodWeight(getFoodWeight() + amount);
+            checkLiveStatus();
         }
     }
 
-    public double getFoodWeight() { return foodWeight; }
-
     public void drink(Double amount)
     {
-        if (isAlive)
+        if (isAlive())
         {
-            weight = weight + amount;
-            setLiveStatus();
+            setWeight(getWeight() + amount);
+            checkLiveStatus();
         }
     }
 
     public Double getWeight() { return weight; }
 
-    public void setLiveStatus()
+    public void checkLiveStatus()
     {
-        if ((weight < MIN_WEIGHT) || (weight > MAX_WEIGHT))
+        if ((getWeight() < getMinWeight()) || (getWeight() > getMaxWeight()))
         {
-            isAlive = false;
-            countCats -= 1;
+            setAlive(false);
+            setCountCats(getCountCats() - 1);
         }
     }
 
     public String getStatus()
     {
-        if(weight < MIN_WEIGHT)
+        if(getWeight() < getMinWeight())
         {
             return "Dead";
         }
-        else if(weight > MAX_WEIGHT)
+        else if(getWeight() > getMaxWeight())
         {
             return "Exploded";
         }
-        else if(weight > originWeight)
+        else if(getWeight() > getOriginWeight())
         {
             return "Sleeping";
         }
@@ -105,10 +171,10 @@ public class Cat
     }
 
     public void pee(){
-        if (isAlive) {
-            weight = weight - (weight / 50);
+        if (isAlive()) {
+            setWeight(getWeight() - (getWeight() / 50));
             System.out.println("pi-pi");
-            setLiveStatus();
+            checkLiveStatus();
         }
     }
 }
