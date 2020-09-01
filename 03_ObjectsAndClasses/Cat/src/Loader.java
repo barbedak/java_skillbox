@@ -7,7 +7,6 @@ public class Loader
 
     public static void main(String[] args)
     {
-        /*
         System.out.println("Total alive cats : " + Cat.getCount());
         System.out.println("Add cats ...");
         Cat barsik = new Cat();
@@ -26,7 +25,7 @@ public class Loader
         System.out.println("Chubays weight: " + chubays.getWeight());
 
         //feeding cats
-        /*
+
         System.out.println();
         System.out.println("Feeding Barsik and Murzik");
         barsik.feed(100.0);
@@ -34,10 +33,6 @@ public class Loader
         System.out.println("Now Barsik weight: " + barsik.getWeight());
         System.out.println("Now Murzik weight: " + murzik.getWeight());
 
-         */
-
-
-        /*
         //feeding Murka
         System.out.println();
         System.out.println("Murka status: " + murka.getStatus());
@@ -59,7 +54,7 @@ public class Loader
 
 
         //killing Kenny
-        /*
+
         System.out.println();
         System.out.println("Kenny status: " + kenny.getStatus());
 
@@ -78,25 +73,18 @@ public class Loader
         chubays.pee();
         System.out.println("Chubays weight is " + chubays.getWeight());
         System.out.println("Chubays ate " + chubays.getFoodWeight());
-        */
+
 
         Cat kitten = getKitten();
         Cat kitten1 = getKitten();
         Cat kitten2 = getKitten();
 
-        Cat tester = new Cat();
-        tester.setName("Tester");
-        System.out.println("Tester name - " + tester.getName());
-        System.out.println("Tester weight - " + tester.getWeight());
-
-        Cat vasyan = new Cat();
-        vasyan.setName("Vasyan");
-        System.out.println("Vasyan name - " + vasyan.getName());
-        System.out.println("Vasyan weight - " + vasyan.getWeight());
-
         System.out.println();
+        musya.setName("Musya");
+        Cat tester = new Cat(musya);
+        System.out.println("Donor name - " + musya.getName());
+        System.out.println("Donor weight - " + musya.getWeight());
         System.out.println("Copying cat...");
-        tester.copyCat(vasyan);
         System.out.println("Tester name - " + tester.getName());
         System.out.println("Tester weight - " + tester.getWeight());
 

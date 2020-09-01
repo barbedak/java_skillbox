@@ -29,6 +29,15 @@ public class Cat
     }
 
 
+    public Cat (Cat cat){
+        this.setName(cat.getName());
+        this.setColor(cat.getColor());
+        this.setWeight(cat.getWeight());
+        this.setOriginWeight(cat.getOriginWeight());
+        this.setFoodWeight(cat.getFoodWeight());
+        this.setAlive(cat.isAlive());
+    }
+
     public void copyCat (Cat cat)
     {
         setName(cat.getName());
