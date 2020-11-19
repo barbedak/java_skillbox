@@ -1,22 +1,21 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Main {
 
   public static void main(String[] args) {
-    System.out.println(splitTextInToWords(""));
+
   }
 
   public static String splitTextInToWords(String text) {
     //TODO реализуйте метод
-    if (text.length()==0){
-      return text;
+    String outputText = "";
+    Pattern pattern = Pattern.compile("[a-zA-Z’]+");
+    Matcher matcher = pattern.matcher(text);
+    while (matcher.find()){
+      outputText = outputText.concat(matcher.group());
+      outputText = outputText.concat("\n");
     }
-    text = text.replaceAll("[^a-zA-Z’]", " ").trim();
-    text = text.replaceAll("[ ]+", " ");
-    String[] result = text.split(" ");
-    text = result[0];
-    for (int i = 1; i < result.length; i++){
-      text = text.concat("\n");
-      text = text.concat(result[i]);
-    }
-    return text;
+    return outputText.trim();
   }
 }
