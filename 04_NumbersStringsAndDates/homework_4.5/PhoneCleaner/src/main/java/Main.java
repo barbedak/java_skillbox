@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
@@ -10,9 +12,13 @@ public class Main {
       if (input.equals("0")) {
         break;
       }
-      //TODO:напишите ваш код тут, результат вывести в консоль.
-      input = input.replaceAll("[^0-9]","");
-      input = input.replaceAll("^8","7");
+
+      Pattern pattern = Pattern.compile("[^0-9]");
+      Matcher matcher = pattern.matcher(input);
+      input = matcher.replaceAll("");
+      pattern = Pattern.compile("8");
+      matcher = pattern.matcher(input);
+      input = matcher.replaceAll("7");
       if (input.charAt(0) != '7') {
         input = "7" + input;
       }
