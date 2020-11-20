@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
@@ -10,20 +12,27 @@ public class Main {
       if (input.equals("0")) {
         break;
       }
-      //TODO:напишите ваш код тут, результат вывести в консоль.
       //При невалидном ФИО вывести в консоль: Введенная строка не является ФИО
-      input = input.replaceAll("[^а-яА-Я-]", " ");
-      input = input.replaceAll("\\s-\\s|\\S+-\\s|\\s-\\S+|^-\\S+|\\S+-$", " ");
-      input = input.replaceAll("[ ]+", " ").trim();
-      String[] fio = input.split(" ");
-      if (fio.length != 3) {
-        System.out.println("Введенная строка не является ФИО");
-      } else {
-        System.out.println("Фамилия: " + fio[0]);
-        System.out.println("Имя: " + fio[1]);
-        System.out.println("Отчество: " + fio[2]);
-      }
 
+      Pattern pattern = Pattern.compile("\\s");
+      String[] fio = pattern.split(input);
+
+      if (fio.length == 3){
+        pattern = Pattern.compile("[а-яА-Я-]+");
+        Matcher surname = pattern.matcher(fio[0]);
+        Matcher name = pattern.matcher(fio[1]);
+        Matcher patronymic = pattern.matcher(fio[2]);
+
+        if (surname.find() && name.find() && patronymic.find()){
+          System.out.println("Фамилия: " + fio[0]);
+          System.out.println("Имя: " + fio[1]);
+          System.out.println("Отчество: " + fio[2]);
+        } else {
+          System.out.println("Введенная строка не является ФИО");
+        }
+      } else {
+        System.out.println("Введенная строка не является ФИО");
+      }
     }
   }
 
