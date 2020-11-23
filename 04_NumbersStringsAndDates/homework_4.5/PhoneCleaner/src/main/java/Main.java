@@ -13,12 +13,13 @@ public class Main {
         break;
       }
 
-      Pattern pattern = Pattern.compile("[^0-9]");
-      Matcher matcher = pattern.matcher(input);
-      input = matcher.replaceAll("");
-      pattern = Pattern.compile("8");
-      matcher = pattern.matcher(input);
-      input = matcher.replaceAll("7");
+      Pattern patternNotNumbers = Pattern.compile("[^0-9]");
+      Matcher matcherNotNumbers = patternNotNumbers.matcher(input);
+      input = matcherNotNumbers.replaceAll("");
+
+      Pattern patternStartEight = Pattern.compile("^8");
+      Matcher matcherStartEight = patternStartEight.matcher(input);
+      input = matcherStartEight.replaceAll("7");
       if (input.charAt(0) != '7') {
         input = "7" + input;
       }
