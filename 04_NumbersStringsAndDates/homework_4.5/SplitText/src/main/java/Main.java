@@ -8,7 +8,6 @@ public class Main {
   }
 
   public static String splitTextInToWords(String text) {
-    //TODO реализуйте метод
     String outputText = "";
     Pattern pattern = Pattern.compile("[a-zA-Z’]+");
     Matcher matcher = pattern.matcher(text);
