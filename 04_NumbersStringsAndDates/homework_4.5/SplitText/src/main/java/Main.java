@@ -13,7 +13,7 @@ public class Main {
     Matcher matcher = pattern.matcher(text);
     while (matcher.find()){
       outputText = outputText.concat(matcher.group());
-      outputText = outputText.concat("\n");
+      outputText = outputText.concat("\r\n");
     }
     return outputText.trim();
   }
