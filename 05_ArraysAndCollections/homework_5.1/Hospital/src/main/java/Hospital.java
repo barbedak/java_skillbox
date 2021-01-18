@@ -3,12 +3,12 @@ public class Hospital {
     public static float[] generatePatientsTemperatures(int patientsCount) {
 
         //TODO: напишите метод генерации массива температур пациентов
-        float[] patientTemp = new float[patientsCount];
+        float[] temperatureData = new float[patientsCount];
         for (int i = 0; i < patientsCount; i++){
-            patientTemp[i] = (float) (Math.random() * 8 + 32.0F);
+            temperatureData[i] = (float) (Math.random() * 8 + 32.0F);
         }
 
-        return patientTemp;
+        return temperatureData;
     }
 
     public static String getReport(float[] temperatureData) {
@@ -18,15 +18,15 @@ public class Hospital {
         */
         String report = "Температуры пациентов:";
         float sumTemp = 0.0F;
-        int healthyPatient = 0;
-        for (float temp : temperatureData){
-            if (temp >= 36.2F && temp <= 36.9F) { healthyPatient++; }
-            report = report.concat(" " + temp);
-            sumTemp += temp;
+        int amountHealthyPatients = 0;
+        for (float temperature : temperatureData){
+            if (temperature >= 36.2F && temperature <= 36.9F) { amountHealthyPatients++; }
+            report = report.concat(" " + temperature);
+            sumTemp += temperature;
         }
 
-        float midTemp = (float) (Math.round(sumTemp / temperatureData.length * 10.0) / 10.0);
-        report = report.concat("\nСредняя температура: " + midTemp + "\nКоличество здоровых: " + healthyPatient);
+        float averageTemp = (float) (Math.round(sumTemp / temperatureData.length * 10.0) / 10.0);
+        report = report.concat("\nСредняя температура: " + averageTemp + "\nКоличество здоровых: " + amountHealthyPatients);
         return report;
     }
 }
