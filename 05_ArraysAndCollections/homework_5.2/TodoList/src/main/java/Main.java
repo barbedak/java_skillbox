@@ -1,21 +1,24 @@
 import java.util.Scanner;
 
 public class Main {
-    private static TodoList todoList = new TodoList();
 
     public static void main(String[] args) {
-        // TODO: написать консольное приложение для работы со списком дел todoList
         Scanner scanner = new Scanner(System.in);
+        TodoList todoList = new TodoList();
+
         while(true)
         {
             String input = scanner.nextLine();
+
             if (input.equals("EXIT"))
             {
                 break;
             }
-            String[] inputArgs = input.split("\\s");
 
-            if (inputArgs[0].equals("LIST"))
+            String[] inputArgs = input.split("\\s");
+            String command = inputArgs[0];
+
+            if (command.equals("LIST"))
             {
                 int i = 0;
                 for (String item : todoList.getTodos())
@@ -24,39 +27,51 @@ public class Main {
                     i++;
                 }
             }
-            if (inputArgs[0].equals("ADD"))
+
+            if (command.equals("ADD"))
             {
-                //если вторым параметром введено число (номер задачи в списке дел)
+                /*
+                если второй переданный параметр число, то используем его как номер места, на которое вставим задачу
+                иначе добавляем задачу в конец списка
+                * */
                 if (Character.isDigit(inputArgs[1].charAt(0)))
                 {
-                    String todo = inputArgs[2] + " ";
+                    int indexTask = Integer.parseInt(inputArgs[1]);
+                    String task = inputArgs[2] + " ";
+
                     for (int i = 3; i < inputArgs.length; i++)
                     {
-                        todo= todo.concat(inputArgs[i] + " ");
+                        task = task.concat(inputArgs[i] + " ");
                     }
-                    todoList.add(Integer.parseInt(inputArgs[1]), todo.trim());
+                    task = task.trim();
+                    todoList.add(indexTask, task);
                 } else
                     {
-                    String todo = inputArgs[1] + " ";
+                    String task = inputArgs[1] + " ";
                     for (int i = 2; i < inputArgs.length; i++)
                     {
-                        todo= todo.concat(inputArgs[i] + " ");
+                        task = task.concat(inputArgs[i] + " ");
                     }
-                    todoList.add(todo.trim());
+                    task = task.trim();
+                    todoList.add(task);
                     }
             }
-            if (inputArgs[0].equals("EDIT"))
+
+            if (command.equals("EDIT"))
             {
-                String todo = inputArgs[2] + " ";
+                int index = Integer.parseInt(inputArgs[1]);
+                String task = inputArgs[2] + " ";
                 for (int i = 3; i < inputArgs.length; i++)
                 {
-                    todo= todo.concat(inputArgs[i] + " ");
+                    task = task.concat(inputArgs[i] + " ");
                 }
-                todoList.edit(todo, Integer.parseInt(inputArgs[1]));
+                todoList.edit(task, index);
             }
-            if (inputArgs[0].equals("DELETE"))
+
+            if (command.equals("DELETE"))
             {
-                todoList.delete(Integer.parseInt(inputArgs[1]));
+                int index = Integer.parseInt(inputArgs[1]);
+                todoList.delete(index);
             }
         }
     }
