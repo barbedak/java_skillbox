@@ -22,7 +22,8 @@ public class CoolNumbers {
         }
         return region;
     }
-    public static List<String> generateCoolNumbers() {
+
+    public static String generateCoolNumber(){
         /*
         * XYZ — различный набор из списка разрешенных букв, N — цифры, R — регион (от 01 до 199);
           XNNNYZR — пример: A111BC197, У777HC66.
@@ -33,16 +34,20 @@ public class CoolNumbers {
         String thirdLetter;
         int digit;
         String region;
-        String number;
+        String coolNumber;
+        firstLetter = String.valueOf(getLetter());
+        secondLetter = String.valueOf(getLetter());
+        thirdLetter = String.valueOf(getLetter());
+        digit = getDigit();
+        region = getRegion();
+        coolNumber = firstLetter + digit + digit + digit + secondLetter + thirdLetter + region;
+        return coolNumber;
+    }
+
+    public static List<String> generateCoolNumbers() {
         List<String> numbersList = new ArrayList<>();
-        for (int i = 0; i < 2000003; i++ ) {
-            firstLetter = String.valueOf(getLetter());
-            secondLetter = String.valueOf(getLetter());
-            thirdLetter = String.valueOf(getLetter());
-            digit = getDigit();
-            region = getRegion();
-            number = firstLetter + digit + digit + digit + secondLetter + thirdLetter + region;
-            numbersList.add(number);
+        for (int i = 0; i < 20003; i++ ) {
+            numbersList.add(generateCoolNumber());
         }
         return numbersList;
     }
