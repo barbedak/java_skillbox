@@ -12,9 +12,18 @@ public class BankAccount {
     }
   }
 
-  public void take(double amountToTake) {
-    if (amount > amountToTake){
+  public boolean take(double amountToTake) {
+    if (amount > amountToTake && amountToTake > 0){
       amount -= amountToTake;
+      return true;
     }
+    return false;
+  }
+  public boolean send(BankAccount receiver, double amount){
+    if (take(amount)){
+      receiver.put(amount);
+      return true;
+    }
+    return false;
   }
 }
