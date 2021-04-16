@@ -2,6 +2,14 @@ public class BankAccount {
 
   private double amount;
 
+  public BankAccount() {
+  }
+
+  public BankAccount(double amount){
+    this();
+    this.amount = amount;
+  }
+
   public double getAmount() {
     return amount;
   }

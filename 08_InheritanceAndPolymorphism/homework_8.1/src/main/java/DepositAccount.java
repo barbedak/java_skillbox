@@ -4,6 +4,15 @@ public class DepositAccount extends BankAccount {
 
     private LocalDate lastIncome;
 
+    public DepositAccount() {
+        super();
+    }
+    public DepositAccount(double amount) {
+        super(amount);
+        LocalDate dateNow = LocalDate.now();
+        setLastIncome(dateNow);
+    }
+
     @Override
     public boolean take(double amountToTake) {
         LocalDate dateNow = LocalDate.now();
