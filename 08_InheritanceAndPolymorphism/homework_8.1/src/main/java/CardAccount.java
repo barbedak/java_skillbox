@@ -1,5 +1,5 @@
 public class CardAccount extends BankAccount {
-    private final double commission = 0.01;
+    private final double COMMISSION = 0.01;
 
     public CardAccount() {
         super();
@@ -11,7 +11,7 @@ public class CardAccount extends BankAccount {
 
     @Override
     public boolean take(double amountToTake) {
-        amountToTake = amountToTake * commission + amountToTake;
+        amountToTake = amountToTake * COMMISSION + amountToTake;
         return super.take(amountToTake);
     }
 }
