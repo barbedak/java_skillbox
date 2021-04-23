@@ -1,11 +1,11 @@
 public class IndividualBusinessman extends Client {
-    private final double BASE_COMMISION = 0.01;
+    private final double BASE_COMMISSION = 0.01;
 
     @Override
     public void put(double amountToPut) {
-        double commission = BASE_COMMISION;
+        double commission = BASE_COMMISSION;
         if (amountToPut >= 1000) {
-            commission = BASE_COMMISION / 2;
+            commission = BASE_COMMISSION / 2;
         }
         super.put(amountToPut - amountToPut * commission);
     }
