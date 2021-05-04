@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Company{
     private int income;
-    private List<Employee> employeeList = new ArrayList<>();
+    private List<Employee> employeesList = new ArrayList<>();
 
     public List<Employee> getTopSalaryStaff(int count){
         List<Employee> topSalaryStaff = new ArrayList<>();
@@ -11,9 +11,9 @@ public class Company{
             return topSalaryStaff;
         }
         EmployeeComporator myEmployeeComparator = new EmployeeComporator();
-        employeeList.sort(myEmployeeComparator);
+        employeesList.sort(myEmployeeComparator);
         for (int i = 0; i < count; i++){
-            topSalaryStaff.add(employeeList.get(i));
+            topSalaryStaff.add(employeesList.get(i));
         }
         return topSalaryStaff;
     }
@@ -24,15 +24,15 @@ public class Company{
             return lowestSalaryStaff;
         }
         EmployeeComporator myEmployeeComparator = new EmployeeComporator();
-        employeeList.sort(myEmployeeComparator.reversed());
+        employeesList.sort(myEmployeeComparator.reversed());
         for (int i = 0; i < count; i++){
-            lowestSalaryStaff.add(employeeList.get(i));
+            lowestSalaryStaff.add(employeesList.get(i));
         }
         return lowestSalaryStaff;
     }
 
     public void hire(Employee employee){
-        employeeList.add(employee);
+        employeesList.add(employee);
     }
 
     public void hireAll(List<Employee> employees){
@@ -42,7 +42,7 @@ public class Company{
     }
 
     public void fire(Employee employee){
-        employeeList.remove(employee);
+        employeesList.remove(employee);
     }
 
     public void setIncome(int income) {
@@ -53,11 +53,11 @@ public class Company{
         return income;
     }
 
-    public List<Employee> getEmployeeList() {
-        return employeeList;
+    public List<Employee> getEmployeesList() {
+        return employeesList;
     }
 
     public int getCompanySize(){
-        return getEmployeeList().size();
+        return employeesList.size();
     }
 }

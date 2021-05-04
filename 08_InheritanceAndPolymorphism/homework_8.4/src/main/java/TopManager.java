@@ -1,11 +1,13 @@
 public class TopManager extends Employee {
-    private final int BASE_SALARY = 100000;
+    private final static int BASE_SALARY = 100000;
+    private final static double BONUS_COEFFICIENT = 1.5;
+    private final static int INCOME_FOR_BONUS = 10000000;
     private int salary;
 
     public TopManager(Company companyName) {
         super(companyName);
-        if(companyName.getIncome() > 10000000) {
-            setSalary((int)(BASE_SALARY + BASE_SALARY * 1.5));
+        if(companyName.getIncome() > INCOME_FOR_BONUS) {
+            setSalary((int) (BASE_SALARY + BASE_SALARY * BONUS_COEFFICIENT));
         } else {
             setSalary(BASE_SALARY);
         }

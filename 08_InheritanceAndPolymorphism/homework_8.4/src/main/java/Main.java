@@ -29,7 +29,7 @@ public class Main {
         int countFireEmployee = myCompany.getCompanySize() / 2;
         for(int i = 0; i <= countFireEmployee; i++){
             int indexFireEmployee = (int)(myCompany.getCompanySize() - Math.random() * myCompany.getCompanySize());
-            myCompany.fire(myCompany.getEmployeeList().get(indexFireEmployee));
+            myCompany.fire(myCompany.getEmployeesList().get(indexFireEmployee));
         }
         System.out.println("\nFire " + countFireEmployee + " employees");
         System.out.println("\nTop salary :");
