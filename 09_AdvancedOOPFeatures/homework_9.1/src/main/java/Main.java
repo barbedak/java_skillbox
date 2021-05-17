@@ -10,6 +10,12 @@ public class Main {
     }
 
     public static void sortBySalaryAndAlphabet(List<Employee> staff) {
-        //TODO Метод должен отсортировать сотрудников по заработной плате и алфавиту.
+        staff.sort((employee1, employee2) -> {
+            if (employee1.getSalary().compareTo(employee2.getSalary()) == 0) {
+                return employee1.getName().compareTo(employee2.getName());
+            } else {
+                return employee1.getSalary().compareTo(employee2.getSalary());
+            }
+        });
     }
 }
