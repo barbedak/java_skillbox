@@ -19,7 +19,7 @@ public class CustomerStorage {
         return number.matches("^\\+7[0-9]+");
     }
 
-    public void addCustomer(String data) {
+    public void addCustomer(String data) throws IncorrectPhoneNumberException, IncorrectEmailException, IllegalCommandException {
         final int INDEX_NAME = 0;
         final int INDEX_SURNAME = 1;
         final int INDEX_EMAIL = 2;
@@ -28,15 +28,15 @@ public class CustomerStorage {
         String[] components = data.split("\\s+");
 
         if (components.length != 4) {
-            throw new IllegalArgumentException("Wrong amount of parameters!");
+            throw new IllegalCommandException("Wrong amount of parameters!", data);
         }
 
         if (!checkEmail(components[INDEX_EMAIL])) {
-            throw new IllegalArgumentException("Wrong e-mail!");
+            throw new IncorrectEmailException("Wrong e-mail!", components[INDEX_EMAIL]);
         }
 
         if (!checkPhoneNumber(components[INDEX_PHONE])) {
-            throw new IllegalArgumentException("Wrong phone!");
+            throw new IncorrectPhoneNumberException("Wrong phone!", components[INDEX_PHONE]);
         }
 
         String name = components[INDEX_NAME] + " " + components[INDEX_SURNAME];

@@ -20,9 +20,13 @@ public class Main {
             if (tokens[0].equals("add")) {
                 try {
                     executor.addCustomer(tokens[1]);
-                } catch (IllegalArgumentException ex) {
+                } catch (IllegalCommandException ex) {
                     System.out.println(ex.getMessage());
                     System.out.println(helpText);
+                } catch (IncorrectEmailException e) {
+                    e.printStackTrace();
+                } catch (IncorrectPhoneNumberException e) {
+                    e.printStackTrace();
                 }
             } else if (tokens[0].equals("list")) {
                 executor.listCustomers();
