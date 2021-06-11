@@ -54,7 +54,7 @@ public class ExceptionTests {
 
     @Test
     @DisplayName("Тест добавления корректных данных Customer")
-    void insertCorrectData() throws IncorrectEmailException, IllegalCommandException, IncorrectPhoneNumberException {
+    void insertCorrectData() {
         final String name = "Василий Петров";
         final String email = "hello@skillbox.ru";
         final String phone = "+79991234567";
@@ -62,8 +62,8 @@ public class ExceptionTests {
 
         try {
             storage.addCustomer(input);
-        } catch (IllegalCommandException | IncorrectPhoneNumberException | IncorrectEmailException exception) {
-            exception.printStackTrace();
+        } catch (IllegalCommandException | IncorrectEmailException | IncorrectPhoneNumberException e) {
+            e.printStackTrace();
         }
         assertEquals(1, storage.getCount());
 

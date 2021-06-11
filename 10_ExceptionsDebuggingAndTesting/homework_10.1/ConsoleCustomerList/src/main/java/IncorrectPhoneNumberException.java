@@ -1,9 +1,9 @@
 public class IncorrectPhoneNumberException extends Exception{
     private String number;
 
-    public IncorrectPhoneNumberException(String message, String number) {
+    public IncorrectPhoneNumberException(String message, String phone) {
         super(message);
-        this.number = number;
+        this.number = phone;
     }
 
     public String getNumber() {

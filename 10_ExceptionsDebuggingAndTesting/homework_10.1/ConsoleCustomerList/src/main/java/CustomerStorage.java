@@ -19,7 +19,7 @@ public class CustomerStorage {
         return number.matches("^\\+7[0-9]+");
     }
 
-    public void addCustomer(String data) throws IllegalCommandException, IncorrectPhoneNumberException, IncorrectEmailException {
+    public void addCustomer(String data) throws IllegalCommandException, IncorrectEmailException, IncorrectPhoneNumberException {
         final int INDEX_NAME = 0;
         final int INDEX_SURNAME = 1;
         final int INDEX_EMAIL = 2;

@@ -29,6 +29,15 @@ public class Main {
                 } catch (IncorrectEmailException ex) {
                     System.out.println(ex.getMessage() + ' ' + ex.getEmail());
                     System.out.println(helpText);
+                } catch (IncorrectEmailException ex) {
+                    System.out.println(ex.getMessage() + ' ' + ex.getEmail());
+                    System.out.println(helpText);
+                } catch (IllegalCommandException ex) {
+                    System.out.println(ex.getMessage() + ' ' + ex.getCommand());
+                    System.out.println(helpText);
+                } catch (IncorrectPhoneNumberException ex) {
+                    System.out.println(ex.getMessage() + ' ' + ex.getNumber());
+                    System.out.println(helpText);
                 }
             } else if (tokens[0].equals("list")) {
                 executor.listCustomers();
