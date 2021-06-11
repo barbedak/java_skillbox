@@ -1,12 +1,12 @@
 public class IncorrectEmailException extends Exception{
-    private String parmeter;
+    private String email;
 
     public IncorrectEmailException(String message, String email) {
         super(message);
-        this.parmeter = email;
+        this.email = email;
     }
 
-    public String getParmeter() {
-        return parmeter;
+    public String getEmail() {
+        return email;
     }
 }

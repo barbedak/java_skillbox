@@ -27,7 +27,7 @@ public class Main {
                     System.out.println(ex.getMessage() + ' ' + ex.getNumber());
                     System.out.println(helpText);
                 } catch (IncorrectEmailException ex) {
-                    System.out.println(ex.getMessage() + ' ' + ex.getParmeter());
+                    System.out.println(ex.getMessage() + ' ' + ex.getEmail());
                     System.out.println(helpText);
                 }
             } else if (tokens[0].equals("list")) {
