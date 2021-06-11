@@ -9,5 +9,4 @@ public class IllegalCommandException extends Exception{
     public String getCommand() {
         return command;
     }
-
 }

@@ -1,4 +1,4 @@
-public class IncorrectPhoneNumberException extends Exception {
+public class IncorrectPhoneNumberException extends Exception{
     private String number;
 
     public IncorrectPhoneNumberException(String message, String number) {

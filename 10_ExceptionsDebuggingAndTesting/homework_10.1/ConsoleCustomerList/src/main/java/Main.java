@@ -20,13 +20,15 @@ public class Main {
             if (tokens[0].equals("add")) {
                 try {
                     executor.addCustomer(tokens[1]);
-                } catch (IllegalCommandException ex) {
-                    System.out.println(ex.getMessage());
+                } catch (IllegalCommandException ex){
+                    System.out.println(ex.getMessage() + ' ' + ex.getCommand());
                     System.out.println(helpText);
-                } catch (IncorrectEmailException e) {
-                    e.printStackTrace();
-                } catch (IncorrectPhoneNumberException e) {
-                    e.printStackTrace();
+                } catch (IncorrectPhoneNumberException ex) {
+                    System.out.println(ex.getMessage() + ' ' + ex.getNumber());
+                    System.out.println(helpText);
+                } catch (IncorrectEmailException ex) {
+                    System.out.println(ex.getMessage() + ' ' + ex.getParmeter());
+                    System.out.println(helpText);
                 }
             } else if (tokens[0].equals("list")) {
                 executor.listCustomers();
