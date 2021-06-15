@@ -125,11 +125,11 @@ public class RouteCalculator {
 
         ArrayList<Station> route = new ArrayList<>();
 
-        List<Station> fromLineStations = from.getLine().getStations();
-        List<Station> toLineStations = to.getLine().getStations();
+        List<Station> firstLineStations = from.getLine().getStations();
+        List<Station> secondLineStations = to.getLine().getStations();
 
-        for (Station srcStation : fromLineStations) {
-            for (Station dstStation : toLineStations) {
+        for (Station srcStation : firstLineStations) {
+            for (Station dstStation : secondLineStations) {
                 List<Station> connectedLineRoute =
                         getRouteViaConnectedLine(srcStation, dstStation);
                 if (connectedLineRoute == null) {
