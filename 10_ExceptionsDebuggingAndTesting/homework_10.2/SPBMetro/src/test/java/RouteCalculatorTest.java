@@ -137,10 +137,9 @@ public class RouteCalculatorTest extends TestCase {
     public void testCalculateDuration(){
         double actual = RouteCalculator.calculateDuration(
                 Arrays.asList(stationIndex.getStation("station6"), stationIndex.getStation("station7"),
-                    stationIndex.getStation("station2"), stationIndex.getStation("station3"),
-                        stationIndex.getStation("station4"), stationIndex.getStation("station12"),
-                        stationIndex.getStation("station13")));
-        double expected = 14.5;
+                        stationIndex.getStation("station8"), stationIndex.getStation("station11"),
+                        stationIndex.getStation("station12")));
+        double expected = 11.0;
         assertEquals(expected, actual);
     }
 }
