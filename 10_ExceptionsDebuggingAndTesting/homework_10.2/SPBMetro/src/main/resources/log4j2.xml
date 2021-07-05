@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="WARN">
-  <appenders>
+    <appenders>
 
-    <File name="SearchFile" fileName="logs/search.log">
-      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-      <Filters>
-        <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL" />
-      </Filters>
-    </File>
+        <File name="SearchFile" fileName="logs/search.log" append="TRUE">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <LevelRangeFilter minLevel="TRACE" maxLevel="TRACE" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
 
-    <File name="InputErrorsFile" fileName="logs/input_errors.log">
-      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-      <Filters>
-        <ThresholdFilter level="error" onMatch="NEUTRAL" onMismatch="DENY" />
-      </Filters>
-    </File>
+        <File name="InputErrorsFile" fileName="logs/input_errors.log" append="TRUE">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <LevelRangeFilter minLevel="WARN" maxLevel="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
 
-    <File name="ExceptionsFile" fileName="logs/exceptions.log">
-      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-    </File>
+        <File name="ExceptionsFile" fileName="logs/exceptions.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <LevelRangeFilter minLevel="FATAL" maxLevel="FATAL" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
 
-  </appenders>
+    </appenders>
 
-  <loggers>
-    <root level="all">
-      <appender-ref ref="SearchFile" level="info"/>
-      <appender-ref ref="InputErrorsFile" level="error"/>
-      <appender-ref ref="ExceptionsFile" level="fatal"/>
-    </root>
-  </loggers>
+    <loggers>
+        <root level="all">
+            <appender-ref ref="SearchFile" level="trace"/>
+            <appender-ref ref="InputErrorsFile" level="warn"/>
+            <appender-ref ref="ExceptionsFile" level="fatal"/>
+        </root>
+    </loggers>
 </configuration>
