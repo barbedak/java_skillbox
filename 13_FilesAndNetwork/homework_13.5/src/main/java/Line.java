@@ -16,7 +16,7 @@ public class Line {
         stations.add(station);
     }
 
-    public List<Station> getStations(){
+    public List<Station> getStations() {
         return stations;
     }
 

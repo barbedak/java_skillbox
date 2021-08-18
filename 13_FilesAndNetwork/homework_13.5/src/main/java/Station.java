@@ -1,10 +1,10 @@
 public class Station {
-    private String name;
-    private Line line;
+    private final String name;
+    private final String lineNumber;
 
-    public Station(String name, Line line) {
+    public Station(String name, String lineNumber) {
         this.name = name;
-        this.line = line;
+        this.lineNumber = lineNumber;
     }
 
     public String getName() {
