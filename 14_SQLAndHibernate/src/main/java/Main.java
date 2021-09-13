@@ -1,32 +1,21 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/skillbox";
-        String user = "root";
-        String pass = "$Master";
-        String sqlQuery = "SELECT course_name, " +
-                "(count(subscription_date) / (MAX(MONTH(subscription_date)) - MIN(MONTH(subscription_date)) + 1)) " +
-                "as avg FROM Purchaselist GROUP BY course_name";
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+        Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
+        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
 
-        try {
-            Connection connection = DriverManager.getConnection(url, user, pass);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
+        Session session = sessionFactory.openSession();
+        Course course = session.get(Course.class, 3);
+        System.out.println("На курсе '" + course.getName() + "' учится " + course.getStudentsCount() + " студентов");
 
-            while (resultSet.next()) {
-                String courseName = resultSet.getString("course_name");
-                String avg = resultSet.getString("avg");
-                System.out.println("Курс \"" + courseName + "\", среднее значение продаж - " + avg);
-            }
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        sessionFactory.close();
+
     }
 }
