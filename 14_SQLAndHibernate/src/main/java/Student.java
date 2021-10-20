@@ -16,8 +16,8 @@ public class Student {
     @Column(name = "registration_date")
     private Date registrationDate;
 
-    @OneToMany (cascade = CascadeType.ALL)
-    private List<Subscription> subscriptions;
+//    @OneToMany (cascade = CascadeType.ALL)
+//    private List<Subscription> subscriptions;
 
     public int getId() {
         return id;
