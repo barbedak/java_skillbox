@@ -2,18 +2,17 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Main {
+public class ImageResize implements Runnable {
+    private File[] files;
+    private String dstFolder;
 
-    public static void main(String[] args) {
-        String srcFolder = "/users/sortedmap/Desktop/src";
-        String dstFolder = "/users/sortedmap/Desktop/dst";
+    public ImageResize(File[] files, String dstFolder) {
+        this.files = files;
+        this.dstFolder = dstFolder;
+    }
 
-        File srcDir = new File(srcFolder);
-
-        long start = System.currentTimeMillis();
-
-        File[] files = srcDir.listFiles();
-
+    @Override
+    public void run() {
         try {
             for (File file : files) {
                 BufferedImage image = ImageIO.read(file);
@@ -23,10 +22,10 @@ public class Main {
 
                 int newWidth = 300;
                 int newHeight = (int) Math.round(
-                    image.getHeight() / (image.getWidth() / (double) newWidth)
+                        image.getHeight() / (image.getWidth() / (double) newWidth)
                 );
                 BufferedImage newImage = new BufferedImage(
-                    newWidth, newHeight, BufferedImage.TYPE_INT_RGB
+                        newWidth, newHeight, BufferedImage.TYPE_INT_RGB
                 );
 
                 int widthStep = image.getWidth() / newWidth;
@@ -45,7 +44,5 @@ public class Main {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        System.out.println("Duration: " + (System.currentTimeMillis() - start));
     }
 }
