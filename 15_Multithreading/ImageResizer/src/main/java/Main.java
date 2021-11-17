@@ -12,19 +12,23 @@ public class Main {
         long start = System.currentTimeMillis();
 
         File[] files = srcDir.listFiles();
-        int part = files.length / NUMBER_OF_CORE;
-        int startCopyPosition = 0;
-
+       
         if (NUMBER_OF_CORE > 1) {
+            int startCopyPosition = 0;
+            int remainder = files.length % NUMBER_OF_CORE;
+            int proportion;
             for (int i = 1; i < NUMBER_OF_CORE; i++) {
-                File[] files1 = new File[part];
+                proportion = files.length / NUMBER_OF_CORE;
+                if (remainder > 0) {
+                    proportion++;
+                    remainder--;
+                }
+                File[] files1 = new File[proportion];
                 System.arraycopy(files, startCopyPosition, files1, 0, files1.length);
                 startCopyPosition += files1.length;
                 new Thread(new ImageResize(files1, dstFolder, start)).start();
             }
         }
-        File[] files1 = new File[files.length - part * NUMBER_OF_CORE + part];
-        System.arraycopy(files, startCopyPosition, files1, 0, files1.length);
-        new Thread(new ImageResize(files1, dstFolder, start)).start();
+        new Thread(new ImageResize(files, dstFolder, start)).start();
     }
 }
