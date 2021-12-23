@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Bank {
@@ -7,7 +7,7 @@ public class Bank {
     private final Random random = new Random();
 
     public synchronized boolean isFraud(String fromAccountNum, String toAccountNum, long amount)
-        throws InterruptedException {
+            throws InterruptedException {
         Thread.sleep(1000);
         return random.nextBoolean();
     }
@@ -18,18 +18,36 @@ public class Bank {
      * метод isFraud. Если возвращается true, то делается блокировка счетов (как – на ваше
      * усмотрение)
      */
-    public void transfer(String fromAccountNum, String toAccountNum, long amount) {
+    public void transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
+        Account fromAccount = accounts.get(fromAccountNum);
+        Account toAccount = accounts.get(toAccountNum);
+        long fromAccountBalance = fromAccount.getMoney();
 
+        if (fromAccountBalance >= amount) {
+            fromAccount.setMoney(fromAccountBalance - amount);
+            toAccount.setMoney(toAccount.getMoney() + amount);
+        }
+
+        if (amount >= 50_000) {
+            if (isFraud(fromAccountNum, toAccountNum, amount)) {
+                fromAccount.block();
+                toAccount.block();
+            }
+        }
     }
 
     /**
      * TODO: реализовать метод. Возвращает остаток на счёте.
      */
     public long getBalance(String accountNum) {
-        return 0;
+        return accounts.get(accountNum).getMoney();
     }
 
     public long getSumAllAccounts() {
-        return 0;
+        long sum = 0L;
+        for (Account account : accounts.values()) {
+            sum += account.getMoney();
+        }
+        return sum;
     }
 }
