@@ -1,10 +1,14 @@
 import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
 
 public class Bank {
 
-    private Map<String, Account> accounts;
+    private Map<String, Account> accounts = new TreeMap<>();
     private final Random random = new Random();
+
+    public Bank() {
+    }
 
     public synchronized boolean isFraud(String fromAccountNum, String toAccountNum, long amount)
             throws InterruptedException {
@@ -12,33 +16,26 @@ public class Bank {
         return random.nextBoolean();
     }
 
-    /**
-     * TODO: реализовать метод. Метод переводит деньги между счетами. Если сумма транзакции > 50000,
-     * то после совершения транзакции, она отправляется на проверку Службе Безопасности – вызывается
-     * метод isFraud. Если возвращается true, то делается блокировка счетов (как – на ваше
-     * усмотрение)
-     */
     public void transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
         Account fromAccount = accounts.get(fromAccountNum);
         Account toAccount = accounts.get(toAccountNum);
-        long fromAccountBalance = fromAccount.getMoney();
+        if (!(fromAccount.getBlocked() || toAccount.getBlocked())) {
+            long fromAccountBalance = fromAccount.getMoney();
 
-        if (fromAccountBalance >= amount) {
-            fromAccount.setMoney(fromAccountBalance - amount);
-            toAccount.setMoney(toAccount.getMoney() + amount);
-        }
+            if (fromAccountBalance >= amount) {
+                fromAccount.setMoney(fromAccountBalance - amount);
+                toAccount.setMoney(toAccount.getMoney() + amount);
+            }
 
-        if (amount >= 50_000) {
-            if (isFraud(fromAccountNum, toAccountNum, amount)) {
-                fromAccount.block();
-                toAccount.block();
+            if (amount >= 50_000) {
+                if (isFraud(fromAccountNum, toAccountNum, amount)) {
+                    fromAccount.block();
+                    toAccount.block();
+                }
             }
         }
     }
 
-    /**
-     * TODO: реализовать метод. Возвращает остаток на счёте.
-     */
     public long getBalance(String accountNum) {
         return accounts.get(accountNum).getMoney();
     }
@@ -49,5 +46,9 @@ public class Bank {
             sum += account.getMoney();
         }
         return sum;
+    }
+
+    public void addAccount(Account acc) {
+        accounts.put(acc.getAccNumber(), acc);
     }
 }

@@ -4,6 +4,16 @@ public class Account {
     private String accNumber;
     private Boolean isBlocked = false;
 
+    public Account() {
+    }
+
+    public Account( String accNumber, long money, Boolean isBlocked) {
+        this();
+        this.money = money;
+        this.accNumber = accNumber;
+        this.isBlocked = isBlocked;
+    }
+
     public long getMoney() {
         return money;
     }
