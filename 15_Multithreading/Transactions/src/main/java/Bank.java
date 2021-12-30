@@ -16,7 +16,7 @@ public class Bank {
         return random.nextBoolean();
     }
 
-    public void transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
+    public synchronized void transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
         Account fromAccount = accounts.get(fromAccountNum);
         Account toAccount = accounts.get(toAccountNum);
         if (!(fromAccount.getBlocked() || toAccount.getBlocked())) {
