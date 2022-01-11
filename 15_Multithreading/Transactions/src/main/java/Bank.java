@@ -16,29 +16,37 @@ public class Bank {
         return random.nextBoolean();
     }
 
+    private void doTransfer(Account fromAccount, Account toAccount, long amount) throws InterruptedException {
+        if (fromAccount.getMoney() >= amount) {
+            fromAccount.setMoney(fromAccount.getMoney() - amount);
+            toAccount.setMoney(toAccount.getMoney() + amount);
+        }
+        if (amount >= 50_000) {
+            if (isFraud(fromAccount.getAccNumber(), toAccount.getAccNumber(), amount)) {
+                fromAccount.block();
+                toAccount.block();
+            }
+        }
+    }
+
     public void transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
         Account fromAccount = accounts.get(fromAccountNum);
         Account toAccount = accounts.get(toAccountNum);
-        synchronized (fromAccount) {
-            synchronized (toAccount) {
-                if (!(fromAccount.getBlocked() || toAccount.getBlocked())) {
-                    long fromAccountBalance = fromAccount.getMoney();
-
-                    if (fromAccountBalance >= amount) {
-                        fromAccount.setMoney(fromAccountBalance - amount);
-                        toAccount.setMoney(toAccount.getMoney() + amount);
+        if (!(fromAccount.getBlocked() || toAccount.getBlocked())) {
+            if (Integer.parseInt(fromAccountNum) > Integer.parseInt(toAccountNum)) {
+                synchronized (fromAccount) {
+                    synchronized (toAccount) {
+                        doTransfer(fromAccount, toAccount, amount);
                     }
-
-                    if (amount >= 50_000) {
-                        if (isFraud(fromAccountNum, toAccountNum, amount)) {
-                            fromAccount.block();
-                            toAccount.block();
-                        }
+                }
+            } else {
+                synchronized (toAccount) {
+                    synchronized (fromAccount) {
+                        doTransfer(fromAccount, toAccount, amount);
                     }
                 }
             }
         }
-
     }
 
     public long getBalance(String accountNum) {
