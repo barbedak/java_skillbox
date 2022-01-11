@@ -16,24 +16,29 @@ public class Bank {
         return random.nextBoolean();
     }
 
-    public synchronized void transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
+    public void transfer(String fromAccountNum, String toAccountNum, long amount) throws InterruptedException {
         Account fromAccount = accounts.get(fromAccountNum);
         Account toAccount = accounts.get(toAccountNum);
-        if (!(fromAccount.getBlocked() || toAccount.getBlocked())) {
-            long fromAccountBalance = fromAccount.getMoney();
+        synchronized (fromAccount) {
+            synchronized (toAccount) {
+                if (!(fromAccount.getBlocked() || toAccount.getBlocked())) {
+                    long fromAccountBalance = fromAccount.getMoney();
 
-            if (fromAccountBalance >= amount) {
-                fromAccount.setMoney(fromAccountBalance - amount);
-                toAccount.setMoney(toAccount.getMoney() + amount);
-            }
+                    if (fromAccountBalance >= amount) {
+                        fromAccount.setMoney(fromAccountBalance - amount);
+                        toAccount.setMoney(toAccount.getMoney() + amount);
+                    }
 
-            if (amount >= 50_000) {
-                if (isFraud(fromAccountNum, toAccountNum, amount)) {
-                    fromAccount.block();
-                    toAccount.block();
+                    if (amount >= 50_000) {
+                        if (isFraud(fromAccountNum, toAccountNum, amount)) {
+                            fromAccount.block();
+                            toAccount.block();
+                        }
+                    }
                 }
             }
         }
+
     }
 
     public long getBalance(String accountNum) {
