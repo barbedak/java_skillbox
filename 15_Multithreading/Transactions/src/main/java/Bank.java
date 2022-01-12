@@ -33,17 +33,11 @@ public class Bank {
         Account fromAccount = accounts.get(fromAccountNum);
         Account toAccount = accounts.get(toAccountNum);
         if (!(fromAccount.getBlocked() || toAccount.getBlocked())) {
-            if (Integer.parseInt(fromAccountNum) > Integer.parseInt(toAccountNum)) {
-                synchronized (fromAccount) {
-                    synchronized (toAccount) {
-                        doTransfer(fromAccount, toAccount, amount);
-                    }
-                }
-            } else {
-                synchronized (toAccount) {
-                    synchronized (fromAccount) {
-                        doTransfer(fromAccount, toAccount, amount);
-                    }
+            Account firstSyncAcc = (Integer.parseInt(fromAccountNum) > Integer.parseInt(toAccountNum) ? fromAccount : toAccount);
+            Account secondSyncAcc = (firstSyncAcc.equals(fromAccount) ? toAccount : fromAccount);
+            synchronized (firstSyncAcc) {
+                synchronized (secondSyncAcc) {
+                    doTransfer(fromAccount, toAccount, amount);
                 }
             }
         }
