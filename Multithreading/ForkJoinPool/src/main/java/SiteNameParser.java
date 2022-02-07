@@ -1,24 +1,29 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.RecursiveTask;
 
-public class SiteNameParser extends RecursiveTask<String> {
+public class SiteNameParser extends RecursiveTask<Map<String, List<Site>>> {
     private Site site;
 
     public SiteNameParser(Site site) {
         this.site = site;
     }
 
+
     @Override
-    protected String compute() {
-        String result = site.getUrl() + "\n";
+    protected Map<String, List<Site>> compute() {
 
+        Map<String, List<Site>> mapSite = new TreeMap<>();
         List<SiteNameParser> taskList = new ArrayList<>();
+        List<Site> children = site.getChildren();
 
-        for (Site child : site.getChildren()) {
+        mapSite.put(site.getUrl(), children);
+
+        for (Site child : children) {
             SiteNameParser task = new SiteNameParser(child);
             task.fork();
-
             try {
                 Thread.sleep(120);
             } catch (Exception e) {
@@ -28,8 +33,8 @@ public class SiteNameParser extends RecursiveTask<String> {
         }
 
         for (SiteNameParser task : taskList) {
-            result = result.concat("\t" + task.join() + "\n");
+            mapSite.putAll(task.join());
         }
-        return result;
+        return mapSite;
     }
 }
