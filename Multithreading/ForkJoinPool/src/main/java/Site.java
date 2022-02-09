@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Site {
-    private String url;
+    private final String url;
     private List<String> children = new ArrayList<>();
 
     public Site(String link) {
@@ -17,13 +17,9 @@ public class Site {
         return children;
     }
 
-    public void addChild(String child) {
-        children.add(child);
-    }
-
     public void fillChildren() {
         try {
-            Thread.sleep(50);
+            Thread.sleep(150);
             Document doc = Jsoup.connect(url).get();
             Elements links = doc.select("a[href$=/]");
             links.forEach((link) -> {

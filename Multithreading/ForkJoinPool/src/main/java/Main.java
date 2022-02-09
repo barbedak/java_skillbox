@@ -15,23 +15,25 @@ public class Main {
         save(ROOT_URL, "");
     }
 
-    private static void save(String node, String prefix) {
-        writeToFile(node + "\n");
-//        prefix +="\t";
+
+    private static void save(String url, String prefix) {
+        writeToFile(prefix + url);
+        prefix = prefix.concat("\t");
         try {
-            List<String> children = siteMap.get(node);
-            for (String child : children) {
-                save(prefix + child, prefix+"\t");
+            List<String> children = siteMap.get(url);
+            for (String childName : children) {
+                save(childName, prefix);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void writeToFile(String link) {
+    private static void writeToFile(String url) {
         try {
             FileWriter writer = new FileWriter("data/out.txt", true);
-            writer.write(link);
+            writer.write(url);
+            writer.write("\n");
             writer.flush();
             writer.close();
         } catch (Exception e) {
