@@ -1,14 +1,13 @@
 package main;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class DefaultController {
 
-    @GetMapping("/{text}&{count:\\d+}")
-    public String index(@PathVariable String text, @PathVariable int count){
+    @GetMapping("/data")
+    @ResponseBody
+    public String index(@RequestParam String text, @RequestParam int count){
         return text.repeat(count);
     }
 }
