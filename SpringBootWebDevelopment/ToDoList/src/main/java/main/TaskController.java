@@ -1,63 +1,55 @@
 package main;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import main.model.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import response.Task;
+import main.model.Task;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class TaskController {
 
-    @GetMapping("/tasks/")
-    public ResponseEntity list() {
-        List<Task> tasks = Storage.getAllTask();
-        if (tasks == null) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-        return new ResponseEntity(tasks, HttpStatus.OK);
+    private TaskRepository taskRepository;
+
+    @Autowired
+    public void setTaskRepository(TaskRepository taskRepository){
+        this.taskRepository = taskRepository;
     }
 
-    @PostMapping("/tasks/add/{task}")
-    public ResponseEntity add(Task task) {
-        Integer taskId = Storage.add(task);
-        if (taskId == null) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-        return new ResponseEntity(taskId, HttpStatus.CREATED);
+
+    @GetMapping("/")
+    public String tasksListPage(Model model) {
+        List<Task> taskList = (List<Task>) taskRepository.findAll();
+        model.addAttribute("taskList", taskList);
+        return "index"; //из templates
     }
 
-    @GetMapping("/tasks/{id}")
-    public ResponseEntity get(@PathVariable int id) {
-        Task task = Storage.getTask(id);
-        if (task == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        return new ResponseEntity(task, HttpStatus.OK);
+    @GetMapping("/tasks/delete/{id}")
+    public String deleteProductById(@PathVariable("id") int id) {
+        taskRepository.deleteById(id);
+        return "redirect:/";
     }
 
-    @PutMapping("/tasks/")
-    public ResponseEntity updateTask(@RequestParam int id, @RequestParam String text) {
-        boolean isUpdated = Storage.update(id, text);
-        if (isUpdated) {
-            return new ResponseEntity("Task update", HttpStatus.OK);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(null);
+    @GetMapping("/add")
+    public String addTaskForm(Model model){
+        model.addAttribute("task", new Task());
+        return "addTask";
     }
 
-    @DeleteMapping("/tasks/{id}")
-    public ResponseEntity deleteTask(@PathVariable int id) {
-        boolean isDeleted = Storage.delete(id);
-        if (isDeleted) {
-            return new ResponseEntity("Task remove", HttpStatus.OK);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(null);
+    @PostMapping("/add")
+    public String taskAddSubmit(@ModelAttribute Task task, Model model) {
+        model.addAttribute("task", task);
+        taskRepository.save(task);
+        return "redirect:/";
     }
 
-    @PostMapping("/tasks/clear/")
-    public ResponseEntity clear() {
-        Storage.clearTaskList();
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    @GetMapping("/details/{id}")
+    public String detailsPage(Model model, @PathVariable("id") Integer id) {
+        Task selectedTask = taskRepository.findById(id).get();
+        model.addAttribute("task", selectedTask);
+        return "details"; //из templates
     }
 }

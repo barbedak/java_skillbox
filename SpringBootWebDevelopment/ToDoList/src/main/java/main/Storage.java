@@ -1,6 +1,6 @@
 package main;
 
-import response.Task;
+import main.model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ public class Storage {
 
     public static synchronized int add(Task task) {
         int id = currentId++;
-        Task.setId(id);
+        task.setId(id);
         tasks.put(id, task);
         return id;
     }
@@ -27,7 +27,7 @@ public class Storage {
     public static synchronized boolean update(int id, String text) {
         if (tasks.containsKey(id)) {
             Task task = tasks.get(id);
-            task.setText(text);
+            task.setContent(text);
             tasks.put(id, task);
             return true;
         }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div th:replace="~{navigation :: navigation(addTask)}"/>
+    <div>
+        <h2>Add task</h2>
+        <form action="#" th:action="@{/add}" th:object="${task}" method="post">
+            <p>Name: <input type="text" th:field="*{name}"/></p>
+            <div>
+                <label class="form-label">Content:</label>
+                <p/>
+                <textarea th:field="*{content}" rows=3 />
+            </div>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+    </div>
+</div>
+</body>
+</html>
