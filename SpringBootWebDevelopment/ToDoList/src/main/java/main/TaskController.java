@@ -1,55 +1,92 @@
 package main;
 
 import main.model.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import main.model.Task;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@Controller
+@RestController
 public class TaskController {
 
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
-    @Autowired
-    public void setTaskRepository(TaskRepository taskRepository){
+    public TaskController(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
-
-    @GetMapping("/")
-    public String tasksListPage(Model model) {
-        List<Task> taskList = (List<Task>) taskRepository.findAll();
-        model.addAttribute("taskList", taskList);
-        return "index"; //из templates
+    @GetMapping("/tasks/")//+
+    public List<Task> list(){
+        Iterable<Task> taskIterable = taskRepository.findAll();
+        List<Task> tasks = new ArrayList<>();
+        for (Task task : taskIterable) {
+            tasks.add(task);
+        }
+        return tasks;
     }
 
-    @GetMapping("/tasks/delete/{id}")
-    public String deleteProductById(@PathVariable("id") int id) {
-        taskRepository.deleteById(id);
-        return "redirect:/";
+    @GetMapping("/tasks/{id}") //+
+    public ResponseEntity<String> detailsTask(@PathVariable("id") Integer id) {
+        Optional<Task> optionalTask = taskRepository.findById(id);
+        if (!optionalTask.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        Task task = optionalTask.get();
+        return new ResponseEntity(task.getName() + " - " + task.getContent(), HttpStatus.OK);
     }
 
-    @GetMapping("/add")
-    public String addTaskForm(Model model){
-        model.addAttribute("task", new Task());
-        return "addTask";
+    @PostMapping("/tasks/add/{task}")
+    public ResponseEntity add(Task task) {
+        Integer taskId = taskRepository.save(task).getId();
+        if (taskId == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+        return new ResponseEntity(taskId, HttpStatus.CREATED);
     }
 
-    @PostMapping("/add")
-    public String taskAddSubmit(@ModelAttribute Task task, Model model) {
-        model.addAttribute("task", task);
-        taskRepository.save(task);
-        return "redirect:/";
+    @PostMapping("/tasks/add/")
+    public ResponseEntity addIdNameContent(@RequestParam String name, @RequestParam String content) {
+        Task task = new Task();
+        task.setName(name);
+        task.setContent(content);
+        Integer taskId = taskRepository.save(task).getId();
+        if (taskId == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+        return new ResponseEntity(taskId, HttpStatus.CREATED);
     }
 
-    @GetMapping("/details/{id}")
-    public String detailsPage(Model model, @PathVariable("id") Integer id) {
-        Task selectedTask = taskRepository.findById(id).get();
-        model.addAttribute("task", selectedTask);
-        return "details"; //из templates
+    @PutMapping("/tasks/") //+
+    public ResponseEntity updateTask(@RequestParam int id, @RequestParam String text) {
+        Optional<Task> optionalTask = taskRepository.findById(id);
+        if (optionalTask.isPresent()) {
+            Task task = optionalTask.get();
+            task.setContent(text);
+            taskRepository.save(task);
+            return new ResponseEntity("Task update", HttpStatus.OK);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(null);
+    }
+
+    @DeleteMapping("/tasks/delete/{id}") //+
+    public ResponseEntity deleteTaskById(@PathVariable int id) {
+        Optional<Task> optionalTask = taskRepository.findById(id);
+        if (optionalTask.isPresent()) {
+            taskRepository.deleteById(id);
+            return new ResponseEntity("Task remove", HttpStatus.OK);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(null);
+    }
+
+    @PostMapping("/tasks/clear/")
+    public ResponseEntity deleteAllTasks() {
+        taskRepository.deleteAll();
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }
