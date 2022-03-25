@@ -1,12 +1,10 @@
 package main;
 
+import main.model.Task;
 import main.model.TaskRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import main.model.Task;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +14,11 @@ import java.util.Optional;
 public class TaskController {
 
     private final TaskRepository taskRepository;
-
     public TaskController(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
-    @GetMapping("/tasks/")//+
+    @GetMapping("/tasks/")
     public List<Task> list(){
         Iterable<Task> taskIterable = taskRepository.findAll();
         List<Task> tasks = new ArrayList<>();
@@ -31,14 +28,14 @@ public class TaskController {
         return tasks;
     }
 
-    @GetMapping("/tasks/{id}") //+
+    @GetMapping("/tasks/{id}")
     public ResponseEntity<String> detailsTask(@PathVariable("id") Integer id) {
         Optional<Task> optionalTask = taskRepository.findById(id);
         if (!optionalTask.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         Task task = optionalTask.get();
-        return new ResponseEntity(task.getName() + " - " + task.getContent(), HttpStatus.OK);
+        return new ResponseEntity(task, HttpStatus.OK);
     }
 
     @PostMapping("/tasks/add/{task}")
@@ -62,7 +59,7 @@ public class TaskController {
         return new ResponseEntity(taskId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/tasks/") //+
+    @PutMapping("/tasks/")
     public ResponseEntity updateTask(@RequestParam int id, @RequestParam String text) {
         Optional<Task> optionalTask = taskRepository.findById(id);
         if (optionalTask.isPresent()) {
@@ -74,7 +71,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(null);
     }
 
-    @DeleteMapping("/tasks/delete/{id}") //+
+    @DeleteMapping("/tasks/delete/{id}")
     public ResponseEntity deleteTaskById(@PathVariable int id) {
         Optional<Task> optionalTask = taskRepository.findById(id);
         if (optionalTask.isPresent()) {

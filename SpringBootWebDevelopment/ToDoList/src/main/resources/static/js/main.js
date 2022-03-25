@@ -36,7 +36,7 @@ $(function(){
             url: '/tasks/' + taskId,
             success: function(response)
             {
-                var code = '<span>Текст задачи:' + response.content + '</span>';
+                var code = '<span>Текст задачи: ' + response.content + '</span>';
                 link.parent().append(code);
             },
             error: function(response)

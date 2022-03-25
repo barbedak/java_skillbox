@@ -24,21 +24,9 @@
 <button id="show-add-task-form">Добавить задачу</button>
 <br><br>
 <div id="task-list">
-    <table>
-        <thead>
-        <tr>
-            <td>Name</td>
-            <td></td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="task : ${tasks}">
-            <td><a th:href=@{'/tasks/'+${task.id}} class="task-link" th:attr="data-id=${task.id}"
-                   th:text="${task.name}"></a></td>
-            <td><a th:href="@{'/tasks/'+${task.id}}">детали</a></td>
-        </tr>
-        </tbody>
-    </table>
+   <div th:each="task : ${tasks}">
+       <a href=# class="task-link" th:attr="data-id=${task.id}" th:text="${task.name}"></a>
+   </div>
 </div>
 </body>
 </html>
