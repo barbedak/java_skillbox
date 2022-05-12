@@ -3,9 +3,9 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 @Embeddable
 public class PurchaseListKey implements Serializable {
-    @Column(name = "student_id")
-    private int studentId;
+    @Column(name = "student_name")
+    private String studentName;
 
-    @Column(name = "course_id")
-    private int courseId;
+    @Column(name = "course_name")
+    private String courseName;
 }

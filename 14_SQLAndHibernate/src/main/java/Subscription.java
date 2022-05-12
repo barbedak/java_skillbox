@@ -11,10 +11,10 @@ public class Subscription {
     @ManyToOne (cascade = CascadeType.ALL)
     private int studentId;
 
-    @Column(name = "course_id", insertable =false, updatable = false)
-    @ManyToOne (cascade = CascadeType.ALL)
+    @Column(name = "course_id", insertable = false, updatable = false)
+    @OneToMany (cascade = CascadeType.ALL)
     private int courseId;
 
-    @Column (name = "subscription_date")
+    @Column(name = "subscription_date")
     private Date subscriptionDate;
 }
